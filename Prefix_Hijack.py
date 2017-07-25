@@ -6,7 +6,8 @@ import datetime
 from telnetlib import *
 
 def prefix_list():
-    connect = requests.get("http://ipctls-ch2-a1p.sys.comcast.net/addrtool/reference_pages/nipeo_ip.txt")
+# connecting to a remote website to import all the prefixes an ISP own's.
+    connect = requests.get('remote file where prefixes where stored')
     temp_list = []
     prefix = re.findall('(\S+)\s+\S+\s+\S+',connect.text)
     if prefix:
@@ -20,7 +21,8 @@ user = 'rviews'
 conn =Telnet(host)
 conn.write((user + "\n").encode('ascii'))
 conn.write(("term len 0\n").encode('ascii'))
-ignore_prefix =['24.104.0.0/17','24.104.128.0/19', '24.149.128.0/17','50.200.0.0/13','50.232.0.0/13','50.224.0.0/12','64.235.160.0/19','64.56.32.0/19','64.78.64.0/18','66.240.0.0/18','72.55.0.0/17','74.81.128.0/19', '107.0.0.0/15','208.39.128.0/18', '208.110.192.0/19', '209.23.192.0/18', '216.45.128.0/17','173.8.0.0/13','173.160.0.0/13','198.0.0.0/16']
+#prefix if needs to ignored as ISP can sell their prefix to other customers and the program shouldn't pull such prefixes.
+ignore_prefix =['mutlihomed customer prefix list']
 del temp_list[0:3]
 for element in ignore_prefix:
     if temp_list.count(element) != 0:
@@ -78,7 +80,7 @@ fo = open('parsed_text.txt','r')
 content = fo.readline()
 while content:
     content_list = content.split()
-    comcast_asn = ['7922','36733','33662','33491','7015','33659','33651','33667','7016','33668','33657','33490','7725','33287','33652','33650','13385','13367','22909','21508','20214','11025','33489','36732','33661','33653','22258','33656','33665','33666','33654','33655','33664','33660']
+    comcast_asn = ['prefix list']
     if content_list[0] != 'None':
         agg_prefix = content_list[0]
         if comcast_asn.count(content_list[-1]) == 0:
